@@ -8,7 +8,38 @@
   <title>Heitor.dev | Portefólio</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+
+<script>
+(() => {
+  const screen = document.getElementById("intro-screen");
+  const skip = document.getElementById("intro-skip");
+
+  if (!screen || !skip) return;
+
+  let closed = false;
+
+  function closeIntro() {
+    if (closed) return;
+    closed = true;
+    screen.classList.add("intro-hidden");
+
+    window.setTimeout(() => {
+      screen.remove();
+    }, 500);
+  }
+
+  skip.addEventListener("click", closeIntro);
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    closeIntro();
+    return;
+  }
+
+  window.setTimeout(closeIntro, 1400);
+})();
+</script>
+
+  <body>
   
 <!-- HEITOR.DEV — FUTURISTIC INTRO -->
 <div id="intro-screen" role="status" aria-label="A carregar Heitor.dev">
