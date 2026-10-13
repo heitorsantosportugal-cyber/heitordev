@@ -405,5 +405,32 @@ document.addEventListener("mousemove", (event) => {
 </body>
 </html>
 
+
+<script>
+(() => {
+  const screen = document.getElementById("intro-screen");
+  const skip = document.getElementById("intro-skip");
+
+  if (!screen || !skip) return;
+
+  let closed = false;
+
+  function closeIntro() {
+    if (closed) return;
+    closed = true;
+
+    screen.classList.add("intro-hidden");
+
+    window.setTimeout(() => {
+      screen.remove();
+    }, 500);
+  }
+
+  skip.addEventListener("click", closeIntro);
+
+  window.setTimeout(closeIntro, 1600);
+})();
+</script>
+
 </body>
 </html>
