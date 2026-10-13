@@ -141,5 +141,183 @@
     <p>© 2026 Heitor Santos</p>
   </footer>
 
+<!-- HEITOR.DEV FUTURE MODE -->
+<canvas id="future-canvas" aria-hidden="true"></canvas>
+
+<div id="future-cursor" aria-hidden="true"></div>
+<div id="future-cursor-ring" aria-hidden="true"></div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("future-canvas");
+  const ctx = canvas.getContext("2d");
+  const cursor = document.getElementById("future-cursor");
+  const ring = document.getElementById("future-cursor-ring");
+
+  if (!ctx) return;
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  let particles = [];
+  let width = 0;
+  let height = 0;
+  let animationId;
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(
+      75,
+      Math.floor((width * height) / 16000)
+    );
+
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.8 + 0.5,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      alpha: Math.random() * 0.5 + 0.2
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of particles) {
+      if (!reducedMotion) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(174, 125, 255, ${p.alpha})`;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#8b5cf6";
+      ctx.fill();
+    }
+
+    ctx.shadowBlur = 0;
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 105) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle =
+            `rgba(145, 91, 255, ${0.14 * (1 - distance / 105)})`;
+          ctx.lineWidth = 0.7;
+          ctx.stroke();
+        }
+      }
+    }
+
+    if (!reducedMotion) {
+      animationId = requestAnimationFrame(draw);
+    }
+  }
+
+  resize();
+  draw();
+
+  window.addEventListener("resize", resize);
+
+  // Cursor neon: apenas em dispositivos com rato
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+
+    document.addEventListener("mousemove", (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+
+      cursor.style.opacity = "1";
+      ring.style.opacity = "1";
+      cursor.style.left = mouseX + "px";
+      cursor.style.top = mouseY + "px";
+    });
+
+    function moveRing() {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+
+      ring.style.left = ringX + "px";
+      ring.style.top = ringY + "px";
+
+      requestAnimationFrame(moveRing);
+    }
+
+    moveRing();
+
+    document.addEventListener("mouseover", (event) => {
+      if (event.target.closest("a, button")) {
+        ring.classList.add("active");
+      } else {
+        ring.classList.remove("active");
+      }
+    });
+
+    document.addEventListener("mouseleave", () => {
+      cursor.style.opacity = "0";
+      ring.style.opacity = "0";
+    });
+
+    document.addEventListener("mouseenter", () => {
+      cursor.style.opacity = "1";
+      ring.style.opacity = "1";
+    });
+  }
+
+  // Animações de entrada das secções
+  const sections = document.querySelectorAll(
+    "main section, body > section, .section"
+  );
+
+  sections.forEach((section) => {
+    section.classList.add("future-reveal");
+  });
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("future-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    sections.forEach((section) => observer.observe(section));
+  } else {
+    sections.forEach((section) => {
+      section.classList.add("future-visible");
+    });
+  }
+})();
+</script>
+</body>
+</html>
+
 </body>
 </html>
