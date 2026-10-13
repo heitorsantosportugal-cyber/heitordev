@@ -431,3 +431,139 @@ footer p {
   }
 }
 
+
+/* =================================
+   HEITOR.DEV — FUTURE MODE 💜
+   ================================= */
+
+#future-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+body > *:not(#future-canvas):not(script):not(style) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Brilho roxo subtil no fundo */
+body {
+  background-image:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(126, 66, 255, 0.10),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(83, 35, 180, 0.10),
+      transparent 40%
+    );
+}
+
+/* Brilho futurista nos cartões */
+.project-card,
+.card,
+.profile-photo {
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.project-card:hover,
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #9b6dff;
+  box-shadow: 0 10px 35px rgba(135, 75, 255, 0.16);
+}
+
+.profile-photo:hover {
+  border-color: #a875ff;
+  box-shadow: 0 0 30px rgba(168, 117, 255, 0.22);
+}
+
+/* Seleção de texto roxa */
+::selection {
+  background: #8b5cf6;
+  color: #ffffff;
+}
+
+/* Cursor personalizado */
+#future-cursor,
+#future-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#future-cursor {
+  width: 7px;
+  height: 7px;
+  background: #c4a5ff;
+  box-shadow: 0 0 12px #a875ff;
+}
+
+#future-cursor-ring {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(168, 117, 255, 0.8);
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    border-color 0.2s ease;
+}
+
+#future-cursor-ring.active {
+  width: 45px;
+  height: 45px;
+  border-color: #d7baff;
+}
+
+/* Entrada suave das secções */
+.future-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.future-reveal.future-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Telemóveis e acessibilidade */
+@media (hover: none), (max-width: 750px) {
+  #future-cursor,
+  #future-cursor-ring {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .future-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
