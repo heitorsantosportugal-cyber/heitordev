@@ -360,3 +360,24 @@ footer p {
     letter-spacing: -1.5px;
   }
 }
+@media (max-width: 750px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .profile-photo {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .profile-info {
+    text-align: center;
+  }
+
+  .profile-info .skills {
+    justify-content: center;
+  }
+}
+
