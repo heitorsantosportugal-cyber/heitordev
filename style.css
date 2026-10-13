@@ -779,3 +779,30 @@ select,
   }
 }
 ```
+```css
+/* HEITOR.DEV — CORREÇÃO DO CURSOR */
+
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body,
+  body * {
+    cursor: none !important;
+  }
+
+  #future-cursor,
+  #future-cursor-ring {
+    position: fixed !important;
+    margin: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    pointer-events: none !important;
+  }
+
+  #future-cursor {
+    z-index: 100002 !important;
+  }
+
+  #future-cursor-ring {
+    z-index: 100001 !important;
+  }
+}
+```
