@@ -381,3 +381,53 @@ footer p {
   }
 }
 
+/* PERFIL - LAYOUT DA FOTOGRAFIA E TEXTO */
+.profile-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  align-items: center;
+  gap: 55px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.profile-photo {
+  width: 100%;
+  max-width: 280px;
+  padding: 10px;
+  border: 1px solid #5548a8;
+  border-radius: 24px;
+  background: #111827;
+}
+
+.profile-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 17px;
+}
+
+.profile-info {
+  min-width: 0;
+}
+
+.profile-info h2 span {
+  color: #a875ff;
+}
+
+@media (max-width: 750px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .profile-photo {
+    margin: 0 auto;
+  }
+
+  .profile-info {
+    text-align: center;
+  }
+}
+
