@@ -528,6 +528,14 @@ body {
   width: 45px;
   height: 45px;
   border-color: #d7baff;
+body,
+a,
+button,
+input,
+textarea,
+select,
+[role="button"] {
+  cursor: none !important;
 }
 
 /* Entrada suave das secções */
