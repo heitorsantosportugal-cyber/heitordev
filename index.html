@@ -283,24 +283,21 @@
     let ringX = -100;
     let ringY = -100;
 
-    document.addEventListener("mousemove", (event) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
+```javascript
+document.addEventListener("mousemove", (event) => {
+  mouseX = event.clientX;
+  mouseY = event.clientY;
 
-      cursor.style.opacity = "1";
-      ring.style.opacity = "1";
-      cursor.style.left = mouseX + "px";
-      cursor.style.top = mouseY + "px";
-    });
+  cursor.style.opacity = "1";
+  ring.style.opacity = "1";
 
-    function moveRing() {
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
+  cursor.style.left = mouseX + "px";
+  cursor.style.top = mouseY + "px";
 
-      ring.style.left = ringX + "px";
-      ring.style.top = ringY + "px";
-
-      requestAnimationFrame(moveRing);
+  ring.style.left = mouseX + "px";
+  ring.style.top = mouseY + "px";
+});
+```
     }
 
     moveRing();
